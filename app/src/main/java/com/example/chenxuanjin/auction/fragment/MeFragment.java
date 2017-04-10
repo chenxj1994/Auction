@@ -1,14 +1,22 @@
 package com.example.chenxuanjin.auction.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.chenxuanjin.auction.LoginActivity;
 import com.example.chenxuanjin.auction.R;
+import com.example.chenxuanjin.auction.bean.MyUser;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +35,8 @@ public class MeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView display_user;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,13 +69,21 @@ public class MeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        Intent intent = new Intent(getActivity(), LoginActivity.class);
+//        startActivity(intent);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_me, container, false);
+        View view =  inflater.inflate(R.layout.fragment_me, container, false);
+        display_user = (TextView)view.findViewById(R.id.display_user);
+        initUI();
+        Button exitbtn = (Button)view.findViewById(R.id.exitBtn);
+        exitbtn.setOnClickListener(listener);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,5 +123,26 @@ public class MeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.exitBtn:
+                    BmobUser.logOut();
+                    initUI();
+            }
+
+        }
+    };
+
+    public void initUI(){
+        if(BmobUser.getCurrentUser(MyUser.class)!=null) {
+            String user = BmobUser.getCurrentUser(MyUser.class).getUsername();
+            display_user.setText(user);
+        }else {
+            display_user.setText("尚未登陆");
+        }
     }
 }

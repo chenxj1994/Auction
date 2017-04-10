@@ -4,6 +4,11 @@
     <string name="title_dashboard">上架</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_me">我</string>
+    <string name="register">注册</string>
+    <string name="phone_verify">手机验证</string>
+    <string name="seconds">秒</string>
+    <string name="resend">重新发送</string>
+    <string name="finish">修改完成</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
