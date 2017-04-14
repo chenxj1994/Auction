@@ -4,22 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white_dark"
+    android:background="#eff0f1"
     android:scrollbarAlwaysDrawVerticalTrack="true"
     tools:context="com.example.chenxuanjin.auction.fragment.MeFragment">
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:background="@color/white"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="90dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/header"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_margin="10dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
             android:layout_gravity="center"
             android:src="@drawable/head_big"
             app:civ_border_color="#ffffff"
@@ -30,14 +31,157 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
             android:text="用户名"
             android:textSize="18sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout_join_auction"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/auction_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/in_auction"
+                style="@style/text_theme"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+                <ImageView
+                    style="@style/right_image" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <ImageView
+            style="@style/divider_style"/>
+
+        <LinearLayout
+            android:id="@+id/layout_finish_auction"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/auction_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/finish_auction"
+                style="@style/text_theme"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+                <ImageView
+                    style="@style/right_image" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout_my_bond"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/bond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/bond"
+                style="@style/text_theme" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+                <ImageView
+                    style="@style/right_image" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            style="@style/divider_style"/>
+        <LinearLayout
+            android:id="@+id/layout_my_upload"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/upload"
+                style="@style/text_theme"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+                <ImageView
+                    style="@style/right_image" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_setup"
+        android:padding="9dp"
+        android:clickable="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/set_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="@string/setup"
+            style="@style/text_theme"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
+            <ImageView
+                style="@style/right_image" />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <Button
-        android:layout_marginTop="10dp"
         android:id="@+id/exitBtn"
-        android:layout_width="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="退出登陆" />
 </LinearLayout>

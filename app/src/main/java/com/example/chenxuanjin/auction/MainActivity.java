@@ -33,30 +33,25 @@ public class MainActivity extends AppCompatActivity {
             transaction = getFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    if(homeFragment == null){
+                    if (homeFragment == null) {
                         homeFragment = new HomeFragment();
                     }
-                    transaction.replace(R.id.content,homeFragment);
+                    transaction.replace(R.id.content, homeFragment);
                     transaction.commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    if(publishFragment == null){
+                    if (publishFragment == null) {
                         publishFragment = new PublishFragment();
                     }
-                    transaction.replace(R.id.content,publishFragment);
+                    transaction.replace(R.id.content, publishFragment);
                     transaction.commit();
                     return true;
                 case R.id.navigation_notifications:
-                    if(BmobUser.getCurrentUser(MyUser.class)!=null){
-                        if(meFragment == null){
-                            meFragment = new MeFragment();
-                        }
-                        transaction.replace(R.id.content,meFragment);
-                        transaction.commit();
-                    }else{
-                        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-                        startActivity(intent);
+                    if (meFragment == null) {
+                        meFragment = new MeFragment();
                     }
+                    transaction.replace(R.id.content, meFragment);
+                    transaction.commit();
                     return true;
             }
             return false;

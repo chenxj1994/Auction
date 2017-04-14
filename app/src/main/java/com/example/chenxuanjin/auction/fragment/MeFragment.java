@@ -1,8 +1,6 @@
 package com.example.chenxuanjin.auction.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.chenxuanjin.auction.LoginActivity;
 import com.example.chenxuanjin.auction.R;
 import com.example.chenxuanjin.auction.bean.MyUser;
 
@@ -56,9 +55,9 @@ public class MeFragment extends Fragment {
     private String mParam2;
 
     private TextView display_user;
-    private boolean isNull = false;
     private ImageView header;
     private Uri uri1;
+    private Button exitbtn;
 
     private OnFragmentInteractionListener mListener;
 
@@ -103,9 +102,9 @@ public class MeFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_me, container, false);
         display_user = (TextView)view.findViewById(R.id.display_user);
         header = (ImageView)view.findViewById(R.id.header);
-        initUI();
-        Button exitbtn = (Button)view.findViewById(R.id.exitBtn);
+        exitbtn = (Button)view.findViewById(R.id.exitBtn);
         exitbtn.setOnClickListener(listener);
+        initUI();
         return view;
     }
 
@@ -151,12 +150,20 @@ public class MeFragment extends Fragment {
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.exitBtn:
-                    BmobUser.logOut();
-                    initUI();
+            if( BmobUser.getCurrentUser(MyUser.class) == null ){
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }else{
+                switch (view.getId()){
+                    case R.id.exitBtn:
+                        BmobUser.logOut();
+                        initUI();
+                        break;
+                    case R.id.header:
+                        getImageFromAlbum();
+                        break;
+                }
             }
-
         }
     };
 
@@ -165,6 +172,7 @@ public class MeFragment extends Fragment {
             MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
             String user = myUser.getUsername();
             display_user.setText(user);
+            exitbtn.setVisibility(View.VISIBLE);
             if(myUser.getHead()!=null){
                 BmobFile bmobFile = myUser.getHead();
                 if(fileIsExists(bmobFile)){
@@ -180,13 +188,9 @@ public class MeFragment extends Fragment {
         }else {
             display_user.setText("尚未登陆");
             header.setImageResource(R.drawable.head_big);
+            exitbtn.setVisibility(View.INVISIBLE);
         }
-        header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getImageFromAlbum();
-            }
-        });
+        header.setOnClickListener(listener);
     }
 
     public boolean fileIsExists(BmobFile file){
