@@ -25,9 +25,6 @@ import com.example.chenxuanjin.auction.R;
 import com.example.chenxuanjin.auction.bean.MyUser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -187,7 +184,7 @@ public class MeFragment extends Fragment {
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                choiceDialog();
+                getImageFromAlbum();
             }
         });
     }
@@ -228,24 +225,6 @@ public class MeFragment extends Fragment {
     }
 
     /**
-     * 图片选择对话框
-     */
-    public void choiceDialog() {
-        final String[] items = {"拍照", "从相册选择"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        //设置单选列表项
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (item == 0) {
-                    getImageFromCamera();
-                } else
-                    getImageFromAlbum();
-            }
-        });
-        builder.show();
-    }
-    /**
      * 打开相册选择图片
      */
     protected void getImageFromAlbum(){
@@ -266,71 +245,13 @@ public class MeFragment extends Fragment {
         return img_url;
     }
 
-    /**
-     * 拍照以获得图片
-     */
-    protected void getImageFromCamera() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");
-            startActivityForResult(getImageByCamera, REQUEST_CODE_CAPTURE_CAMERA);
-        } else {
-            Toast.makeText(getApplicationContext(), "请确认已经插入SD卡", Toast.LENGTH_LONG).show();
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_PICK_IMAGE) {
             uri1 = data.getData();
             //to do find the path of pic by uri
             header.setImageURI(uri1);
             String photoPath=transUri(uri1);
             uploadPhoto(photoPath);
-
-        } else if (requestCode == REQUEST_CODE_CAPTURE_CAMERA) {
-            uri1 = data.getData();
-            if (uri1 == null) {
-                //use bundle to get data
-                Bundle bundle = data.getExtras();
-                if (bundle != null) {
-                    Bitmap photo = (Bitmap) bundle.get("data"); //get bitmap
-                    saveImage(photo);
-                    header.setImageBitmap(photo);
-                } else {
-                    Toast.makeText(getApplicationContext(), "err****", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            } else {
-                //to do find the path of pic by uri
-                header.setImageURI(uri1);
-                String photoPath=transUri(uri1);
-                uploadPhoto(photoPath);
-            }
-        }
-    }
-
-    /**
-     * 保存图片
-     * @param bmp
-     */
-    public static void saveImage(Bitmap bmp) {
-        File appDir = new File(Environment.getExternalStorageDirectory(), "SavePic");
-        if (!appDir.exists()) {
-            appDir.mkdir();
-        }
-        String fileName = System.currentTimeMillis() + ".jpg";
-        File file = new File(appDir, fileName);
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
