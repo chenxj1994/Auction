@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#eff0f1"
+    android:background="@color/backgroud_gray"
     android:scrollbarAlwaysDrawVerticalTrack="true"
     tools:context="com.example.chenxuanjin.auction.fragment.MeFragment">
 
