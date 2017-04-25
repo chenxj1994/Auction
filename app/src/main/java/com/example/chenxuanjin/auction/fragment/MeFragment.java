@@ -1,7 +1,6 @@
 package com.example.chenxuanjin.auction.fragment;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,13 +23,7 @@ import android.widget.Toast;
 import com.example.chenxuanjin.auction.LoginActivity;
 import com.example.chenxuanjin.auction.R;
 import com.example.chenxuanjin.auction.bean.MyUser;
-import com.example.chenxuanjin.auction.utils.BitmapOption;
-
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -40,6 +33,8 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 import static cn.bmob.v3.Bmob.getApplicationContext;
+import static com.example.chenxuanjin.auction.utils.ImageCompression.compressBySize;
+import static com.example.chenxuanjin.auction.utils.ImageCompression.saveBitmapToFile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +50,6 @@ public class MeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int REQUEST_CODE_PICK_IMAGE = 0xa0;
-    private static final int REQUEST_CODE_CAPTURE_CAMERA = 0xa1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -302,61 +296,6 @@ public class MeFragment extends Fragment {
                 }
             }
         });
-    }
-
-    /**
-     *
-     */
-    //存储进SD卡
-    public String saveBitmapToFile(Bitmap bm) throws Exception {
-        File file = new File("/sdcard/myImage/");
-        if(!file.exists()){
-            file.mkdirs();
-        }
-        //
-        String str=null;
-        Date date=null;
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");//获取当前时间，进一步转化为字符串
-        date =new Date();
-        str=format.format(date);
-        String fileName = "/sdcard/myImage/"+str+".jpg";
-        //
-        File myCaptureFile = new File(fileName);
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-        //100表示不进行压缩，70表示压缩率为30%
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-        bos.flush();
-        bos.close();
-        return fileName;
-    }
-    /**
-     *
-     */
-
-    //压缩图片尺寸
-    public Bitmap compressBySize(String pathName, int targetWidth,
-                                 int targetHeight) {
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inJustDecodeBounds = true;// 不去真的解析图片，只是获取图片的头部信息，包含宽高等；
-        Bitmap bitmap = BitmapFactory.decodeFile(pathName, opts);
-        // 得到图片的宽度、高度；
-        float imgWidth = opts.outWidth;
-        float imgHeight = opts.outHeight;
-        // 分别计算图片宽度、高度与目标宽度、高度的比例；取大于等于该比例的最小整数；
-        int widthRatio = (int) Math.ceil(imgWidth / (float) targetWidth);
-        int heightRatio = (int) Math.ceil(imgHeight / (float) targetHeight);
-        opts.inSampleSize = 1;
-        if (widthRatio > 1 || widthRatio > 1) {
-            if (widthRatio > heightRatio) {
-                opts.inSampleSize = widthRatio;
-            } else {
-                opts.inSampleSize = heightRatio;
-            }
-        }
-        //设置好缩放比例后，加载图片进内容；
-        opts.inJustDecodeBounds = false;
-        bitmap = BitmapFactory.decodeFile(pathName, opts);
-        return bitmap;
     }
 }
 

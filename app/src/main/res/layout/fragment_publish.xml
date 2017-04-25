@@ -6,21 +6,136 @@
     tools:context="com.example.chenxuanjin.auction.fragment.PublishFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/hello_publish_fragment"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="8dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@null"
+                    android:hint="标题/商品名称" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:src="@color/backgroud_gray"
+                    android:layout_height="2dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:layout_margin="12dp"
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:ems="10"
+                        android:hint="描述下你的宝贝..."
+                        android:inputType="textMultiLine" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:src="@color/backgroud_gray"
+                    android:layout_height="2dp" />
+                <ImageView
+                    android:id="@+id/goods_photo"
+                    android:background="@color/backgroud_gray"
+                    android:layout_margin="12dp"
+                    android:padding="12dp"
+                    android:src="@drawable/add_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/publish_text_style"
+                        android:text="价格                 ¥" />
+
+                    <EditText
+                        android:hint="0.00"
+                        android:id="@+id/price"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:background="@null"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+
+                <ImageView
+                    style="@style/publish_divider" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="分类             "
+                        style="@style/publish_text_style" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/goods_type"
+                        android:entries="@array/type"
+                        android:layout_marginLeft="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                    </android.support.v7.widget.AppCompatSpinner>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/publish_sure"
+                android:background="@drawable/shape_button"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="15dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="确定发布"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"/>
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
