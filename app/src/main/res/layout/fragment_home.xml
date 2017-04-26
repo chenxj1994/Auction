@@ -54,9 +54,13 @@
     </RadioGroup>
 
     <ListView
-        android:background="@color/backgroud_gray"
         android:id="@+id/goods_list_item"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:background="@color/backgroud_gray"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:clickable="true">
+    </ListView>
 </LinearLayout>

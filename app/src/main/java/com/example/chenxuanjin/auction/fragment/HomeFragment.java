@@ -4,13 +4,25 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.chenxuanjin.auction.R;
+import com.example.chenxuanjin.auction.adapter.GoodsListAdapter;
+import com.example.chenxuanjin.auction.bean.Goods;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +45,9 @@ public class HomeFragment extends Fragment implements RadioGroup.OnCheckedChange
 
     private RadioGroup tabRadioGroup ;
     private RadioButton all,eProduct,clothes,dailyNecess,book,others;
+    private ListView mListView;
+    private GoodsListAdapter mGoodsListAdapter;
+    private List<Goods> listItems = new ArrayList<Goods>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -85,7 +100,8 @@ public class HomeFragment extends Fragment implements RadioGroup.OnCheckedChange
         others = (RadioButton)view.findViewById(R.id.others);
         tabRadioGroup = (RadioGroup)view.findViewById(R.id.tab_radioGroup);
         tabRadioGroup.setOnCheckedChangeListener(this);
-
+        mListView = (ListView)view.findViewById(R.id.goods_list_item);
+        query();
     }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -131,17 +147,22 @@ public class HomeFragment extends Fragment implements RadioGroup.OnCheckedChange
         setRadioBtnColor();
         switch (CheckId){
             case R.id.list_all:
+                query();
                 break;
             case R.id.elect_product:
+                query("电子产品");
                 break;
             case R.id.clothes:
+                query("衣服");
                 break;
             case R.id.daily_necess:
+                query("日用品");
                 break;
             case R.id.book:
+                query("书籍");
                 break;
             case R.id.others:
-                others.setBackgroundResource(R.color.backgroud_gray);
+                query("其他");
                 break;
         }
     }
@@ -155,5 +176,46 @@ public class HomeFragment extends Fragment implements RadioGroup.OnCheckedChange
                 rdBtnArray[i].setBackgroundResource(R.color.white);
             }
         }
+    }
+
+    public void query(){
+        BmobQuery<Goods> query = new BmobQuery<Goods>();
+        query.addWhereEqualTo("state",false);
+        query.findObjects(new FindListener<Goods>() {
+            @Override
+            public void done(List<Goods> list, BmobException e) {
+                if(e == null){
+                    Log.i("harden","查询成功");
+                    listItems = list;
+                    mGoodsListAdapter = new GoodsListAdapter(getActivity(),listItems);
+                    mListView.setAdapter(mGoodsListAdapter);
+                    mGoodsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    public void query(String type){
+        BmobQuery<Goods> eq1 = new BmobQuery<Goods>();
+        eq1.addWhereEqualTo("type",type);
+        BmobQuery<Goods> eq2 = new BmobQuery<Goods>();
+        eq2.addWhereEqualTo("state",false);
+        List<BmobQuery<Goods>> andQuerys = new ArrayList<BmobQuery<Goods>>();
+        andQuerys.add(eq1);
+        andQuerys.add(eq2);
+        BmobQuery<Goods> query = new BmobQuery<Goods>();
+        query.and(andQuerys);
+        query.findObjects(new FindListener<Goods>() {
+            @Override
+            public void done(List<Goods> list, BmobException e) {
+                if(e == null){
+                    Log.i("harden","查询成功");
+                    listItems = list;
+                    mGoodsListAdapter = new GoodsListAdapter(getActivity(),listItems);
+                    mListView.setAdapter(mGoodsListAdapter);
+                    mGoodsListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 }
