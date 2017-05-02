@@ -37,56 +37,63 @@
     </LinearLayout>
 
     <LinearLayout
-        android:padding="10dp"
-        android:background="@color/white"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="10dp">
+
         <LinearLayout
-            android:id="@+id/layout_join_auction"
-            android:clickable="true"
-            android:orientation="horizontal"
+            android:id="@+id/layout_publish"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="horizontal">
+
             <ImageView
-                android:src="@drawable/auction_in"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/publish" />
+
             <TextView
-                android:text="@string/in_auction"
-                style="@style/text_theme"/>
+                style="@style/text_theme"
+                android:text="@string/upload" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="right">
-                <ImageView
-                    style="@style/right_image" />
+
+                <ImageView style="@style/right_image" />
             </LinearLayout>
 
         </LinearLayout>
-        <ImageView
-            style="@style/divider_style"/>
+
+        <ImageView style="@style/divider_style" />
 
         <LinearLayout
-            android:id="@+id/layout_finish_auction"
-            android:clickable="true"
-            android:orientation="horizontal"
+            android:id="@+id/layout_sell_out"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="horizontal">
+
             <ImageView
-                android:src="@drawable/auction_finish"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/my_order" />
+
             <TextView
-                android:text="@string/finish_auction"
-                style="@style/text_theme"/>
+                style="@style/text_theme"
+                android:text="@string/my_selled" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="right">
-                <ImageView
-                    style="@style/right_image" />
+
+                <ImageView style="@style/right_image" />
             </LinearLayout>
 
         </LinearLayout>
@@ -101,17 +108,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:id="@+id/layout_my_bond"
+            android:id="@+id/layout_bought"
             android:clickable="true"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/bond"
+                android:src="@drawable/buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:text="@string/bond"
+                android:text="@string/buy"
                 style="@style/text_theme" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,17 +133,17 @@
         <ImageView
             style="@style/divider_style"/>
         <LinearLayout
-            android:id="@+id/layout_my_upload"
+            android:id="@+id/layout_my_like"
             android:clickable="true"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/upload"
+                android:src="@drawable/liked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:text="@string/upload"
+                android:text="@string/my_like"
                 style="@style/text_theme"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -151,7 +158,10 @@
 
     <LinearLayout
         android:id="@+id/layout_setup"
-        android:padding="9dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:clickable="true"
         android:background="@color/white"
         android:orientation="horizontal"

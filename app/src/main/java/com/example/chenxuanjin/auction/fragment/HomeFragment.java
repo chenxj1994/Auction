@@ -1,28 +1,39 @@
 package com.example.chenxuanjin.auction.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.example.chenxuanjin.auction.GoodsDetailActivity;
 import com.example.chenxuanjin.auction.R;
 import com.example.chenxuanjin.auction.adapter.GoodsListAdapter;
 import com.example.chenxuanjin.auction.bean.Goods;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.FindListener;
+
+import static cn.bmob.v3.Bmob.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +112,17 @@ public class HomeFragment extends Fragment implements RadioGroup.OnCheckedChange
         tabRadioGroup = (RadioGroup)view.findViewById(R.id.tab_radioGroup);
         tabRadioGroup.setOnCheckedChangeListener(this);
         mListView = (ListView)view.findViewById(R.id.goods_list_item);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Goods goods = listItems.get(i);
+                Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("goods_data",goods);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         query();
     }
     // TODO: Rename method, update argument and hook method into UI event

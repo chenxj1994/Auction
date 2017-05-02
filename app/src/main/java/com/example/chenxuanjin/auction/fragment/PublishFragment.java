@@ -1,7 +1,9 @@
 package com.example.chenxuanjin.auction.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.chenxuanjin.auction.LoginActivity;
 import com.example.chenxuanjin.auction.R;
 import com.example.chenxuanjin.auction.bean.Goods;
 import com.example.chenxuanjin.auction.bean.MyUser;
@@ -112,6 +115,9 @@ public class PublishFragment extends Fragment {
         goodsPic = (ImageView)view.findViewById(R.id.goods_photo);
         publishSureBtn.setOnClickListener(listener);
         goodsPic.setOnClickListener(listener);
+        if(BmobUser.getCurrentUser(MyUser.class)==null){
+            showDialog();
+        }
     }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -179,13 +185,17 @@ public class PublishFragment extends Fragment {
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.goods_photo:
-                    getImageFromAlbum();
-                    break;
-                case R.id.publish_sure:
-                    uploadGoods();
-                    break;
+            if (BmobUser.getCurrentUser(MyUser.class) == null) {
+                showDialog();
+            } else {
+                switch (view.getId()) {
+                    case R.id.goods_photo:
+                        getImageFromAlbum();
+                        break;
+                    case R.id.publish_sure:
+                        uploadGoods();
+                        break;
+                }
             }
         }
     };
@@ -196,7 +206,7 @@ public class PublishFragment extends Fragment {
             picUri = data.getData();
             //to do find the path of pic by uri
             String photoPath=transUri(picUri);
-            Bitmap bitmap = compressBySize(photoPath,150,200);
+            Bitmap bitmap = compressBySize(photoPath,400,400);
             try{
                 newPath = saveBitmapToFile(bitmap);
                 goodsPic.setImageBitmap(bitmap);
@@ -253,5 +263,18 @@ public class PublishFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("请先登陆！");
+        builder.setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.create().show();
     }
 }

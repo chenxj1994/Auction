@@ -1,7 +1,9 @@
 package com.example.chenxuanjin.auction.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,10 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chenxuanjin.auction.LoginActivity;
+import com.example.chenxuanjin.auction.PersonalGoodsListActivity;
 import com.example.chenxuanjin.auction.R;
 import com.example.chenxuanjin.auction.bean.MyUser;
 import java.io.File;
@@ -59,6 +63,7 @@ public class MeFragment extends Fragment {
     private ImageView header;
     private Uri uri1;
     private Button exitbtn;
+    private LinearLayout publishLayout,sellOutLayout,boughtLayout,myLikeLayout,setUpLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -104,7 +109,17 @@ public class MeFragment extends Fragment {
         display_user = (TextView)view.findViewById(R.id.display_user);
         header = (ImageView)view.findViewById(R.id.header);
         exitbtn = (Button)view.findViewById(R.id.exitBtn);
+        publishLayout = (LinearLayout)view.findViewById(R.id.layout_publish);
+        sellOutLayout = (LinearLayout)view.findViewById(R.id.layout_sell_out);
+        boughtLayout = (LinearLayout)view.findViewById(R.id.layout_bought);
+        myLikeLayout = (LinearLayout)view.findViewById(R.id.layout_my_like);
+        setUpLayout = (LinearLayout)view.findViewById(R.id.layout_setup);
         exitbtn.setOnClickListener(listener);
+        publishLayout.setOnClickListener(listener);
+        sellOutLayout.setOnClickListener(listener);
+        boughtLayout.setOnClickListener(listener);
+        myLikeLayout.setOnClickListener(listener);
+        setUpLayout.setOnClickListener(listener);
         initUI();
         return view;
     }
@@ -151,17 +166,28 @@ public class MeFragment extends Fragment {
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if( BmobUser.getCurrentUser(MyUser.class) == null ){
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+            if (BmobUser.getCurrentUser(MyUser.class) == null) {
+                showDialog();
             }else{
                 switch (view.getId()){
+                    case R.id.header:
+                        getImageFromAlbum();
+                        break;
+                    case R.id.layout_publish:
+                        Intent intent = new Intent(getActivity(), PersonalGoodsListActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.layout_sell_out:
+                        break;
+                    case R.id.layout_bought:
+                        break;
+                    case R.id.layout_my_like:
+                        break;
+                    case R.id.layout_setup:
+                        break;
                     case R.id.exitBtn:
                         BmobUser.logOut();
                         initUI();
-                        break;
-                    case R.id.header:
-                        getImageFromAlbum();
                         break;
                 }
             }
@@ -296,6 +322,19 @@ public class MeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("请先登陆！");
+        builder.setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.create().show();
     }
 }
 

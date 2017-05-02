@@ -33,7 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/login"/>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/register" />
@@ -44,7 +46,16 @@
         <activity
             android:name=".SetNewPasswordActivity"
             android:label="@string/finish" />
-        <activity android:name=".PersonalGoodsListActivity"></activity>
+        <activity
+            android:name=".PersonalGoodsListActivity"
+            android:label="@string/upload" />
+        <activity
+            android:name=".GoodsDetailActivity"
+            android:label="@string/goods_detail"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".OrderConfirmActivity"
+            android:label="@string/buy_goods"></activity>
     </application>
 
 </manifest>

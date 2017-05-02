@@ -1,6 +1,8 @@
 package com.example.chenxuanjin.auction.bean;
 
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -8,7 +10,9 @@ import cn.bmob.v3.datatype.BmobFile;
  * Created by chenxuanjin on 2017/4/15.
  */
 
-public class Goods extends BmobObject{
+public class Goods extends BmobObject implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private String goodsName;
     private String des;
     private String type;

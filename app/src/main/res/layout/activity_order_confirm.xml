@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_gray"
+    tools:context="com.example.chenxuanjin.auction.PersonalGoodsListActivity">
+
+    <RelativeLayout
+        android:id="@+id/order_goods_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="8dp"
+        android:background="@color/white">
+        <ImageView
+            android:src="@drawable/goods_photo"
+            android:id="@+id/order_goods_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:id="@+id/order_goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/order_goods_pic"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            tools:text="MacBookAir 13.3寸"/>
+        <TextView
+            android:id="@+id/order_goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/order_goods_pic"
+            android:layout_below="@id/order_goods_name"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/red"
+            android:text="¥ 0.0"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@id/order_goods_detail_layout"
+        android:layout_marginTop="20dp"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/contact"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:text="联系方式 : "
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/order_contact"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone_or_wechat" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text_pay"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:text="@string/actual_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/order_goods_actual_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/text_pay"
+            android:layout_marginLeft="5dp"
+            android:text="¥ 0.0"/>
+        <Button
+            android:id="@+id/order_confirm_btn"
+            android:text="@string/order_confirm"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorPrimary"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>
