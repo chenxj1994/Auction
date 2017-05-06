@@ -23,9 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.chenxuanjin.auction.BoughtGoodsActivity;
 import com.example.chenxuanjin.auction.LoginActivity;
 import com.example.chenxuanjin.auction.PersonalGoodsListActivity;
 import com.example.chenxuanjin.auction.R;
+import com.example.chenxuanjin.auction.SellOutGoodsActivity;
+import com.example.chenxuanjin.auction.SetupActivity;
 import com.example.chenxuanjin.auction.bean.MyUser;
 import java.io.File;
 
@@ -62,7 +65,6 @@ public class MeFragment extends Fragment {
     private TextView display_user;
     private ImageView header;
     private Uri uri1;
-    private Button exitbtn;
     private LinearLayout publishLayout,sellOutLayout,boughtLayout,myLikeLayout,setUpLayout;
 
     private OnFragmentInteractionListener mListener;
@@ -108,13 +110,11 @@ public class MeFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_me, container, false);
         display_user = (TextView)view.findViewById(R.id.display_user);
         header = (ImageView)view.findViewById(R.id.header);
-        exitbtn = (Button)view.findViewById(R.id.exitBtn);
         publishLayout = (LinearLayout)view.findViewById(R.id.layout_publish);
         sellOutLayout = (LinearLayout)view.findViewById(R.id.layout_sell_out);
         boughtLayout = (LinearLayout)view.findViewById(R.id.layout_bought);
         myLikeLayout = (LinearLayout)view.findViewById(R.id.layout_my_like);
         setUpLayout = (LinearLayout)view.findViewById(R.id.layout_setup);
-        exitbtn.setOnClickListener(listener);
         publishLayout.setOnClickListener(listener);
         sellOutLayout.setOnClickListener(listener);
         boughtLayout.setOnClickListener(listener);
@@ -174,20 +174,22 @@ public class MeFragment extends Fragment {
                         getImageFromAlbum();
                         break;
                     case R.id.layout_publish:
-                        Intent intent = new Intent(getActivity(), PersonalGoodsListActivity.class);
-                        startActivity(intent);
+                        Intent publishIntent = new Intent(getActivity(), PersonalGoodsListActivity.class);
+                        startActivity(publishIntent);
                         break;
                     case R.id.layout_sell_out:
+                        Intent sellIntent = new Intent(getActivity(), SellOutGoodsActivity.class);
+                        startActivity(sellIntent);
                         break;
                     case R.id.layout_bought:
+                        Intent boughtIntent = new Intent(getActivity(), BoughtGoodsActivity.class);
+                        startActivity(boughtIntent);
                         break;
                     case R.id.layout_my_like:
                         break;
                     case R.id.layout_setup:
-                        break;
-                    case R.id.exitBtn:
-                        BmobUser.logOut();
-                        initUI();
+                        Intent setupIntent = new Intent(getActivity(), SetupActivity.class);
+                        startActivity(setupIntent);
                         break;
                 }
             }
@@ -199,7 +201,6 @@ public class MeFragment extends Fragment {
             MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
             String user = myUser.getUsername();
             display_user.setText(user);
-            exitbtn.setVisibility(View.VISIBLE);
             if(myUser.getHead()!=null){
                 BmobFile bmobFile = myUser.getHead();
                 if(fileIsExists(bmobFile)){
@@ -215,7 +216,6 @@ public class MeFragment extends Fragment {
         }else {
             display_user.setText("尚未登陆");
             header.setImageResource(R.drawable.head_big);
-            exitbtn.setVisibility(View.INVISIBLE);
         }
         header.setOnClickListener(listener);
     }

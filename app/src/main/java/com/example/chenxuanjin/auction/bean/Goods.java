@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by chenxuanjin on 2017/4/15.
@@ -20,6 +21,7 @@ public class Goods extends BmobObject implements Serializable{
     private String seller;
     private BmobFile pic;
     private Float Price;
+    private BmobRelation likes;
 
 
     public String getGoodsName(){
@@ -78,4 +80,11 @@ public class Goods extends BmobObject implements Serializable{
         this.Price = Price;
     }
 
+    public void setLikes(BmobRelation likes){
+        this.likes = likes;
+    }
+
+    public BmobRelation getLikes(){
+        return likes;
+    }
 }

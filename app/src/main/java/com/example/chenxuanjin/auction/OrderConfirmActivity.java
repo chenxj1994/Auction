@@ -67,7 +67,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
 
     public void uploadOrder(){
         String contact = orderContact.getText().toString();
-        String buyer = BmobUser.getCurrentUser().getUsername();
+        MyUser buyer = BmobUser.getCurrentUser(MyUser.class);
         Goods orderGoods = goods;
         //下单后将货物的state状态置为false
         orderGoods.setValue("state",true);
@@ -78,7 +78,7 @@ public class OrderConfirmActivity extends AppCompatActivity {
         //
         Orders orders = new Orders();
         orders.setContact(contact);
-        orders.setBuyerName(buyer);
+        orders.setBuyer(buyer);
         orders.setGoods(orderGoods);
         orders.save(new SaveListener<String>() {
             @Override

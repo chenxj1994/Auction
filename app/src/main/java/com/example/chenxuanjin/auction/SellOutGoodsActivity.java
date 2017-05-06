@@ -16,7 +16,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
-public class PersonalGoodsListActivity extends AppCompatActivity {
+public class SellOutGoodsActivity extends AppCompatActivity {
 
     private ListView mListView;
     private GoodsListAdapter mGoodsListAdapter;
@@ -24,8 +24,8 @@ public class PersonalGoodsListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal_goods_list);
-        mListView = (ListView)findViewById(R.id.my_goods_list);
+        setContentView(R.layout.activity_sell_out_goods);
+        mListView = (ListView)findViewById(R.id.sell_out_list);
         query();
     }
 
@@ -35,7 +35,7 @@ public class PersonalGoodsListActivity extends AppCompatActivity {
         String user = myUser.getUsername();
         eq1.addWhereEqualTo("seller",user);
         BmobQuery<Goods> eq2 = new BmobQuery<Goods>();
-        eq2.addWhereEqualTo("state",false);
+        eq2.addWhereEqualTo("state",true);
         List<BmobQuery<Goods>> andQuerys = new ArrayList<BmobQuery<Goods>>();
         andQuerys.add(eq1);
         andQuerys.add(eq2);
@@ -45,7 +45,7 @@ public class PersonalGoodsListActivity extends AppCompatActivity {
             @Override
             public void done(List<Goods> list, BmobException e) {
                 listItems = list;
-                mGoodsListAdapter = new GoodsListAdapter(PersonalGoodsListActivity.this,listItems);
+                mGoodsListAdapter = new GoodsListAdapter(SellOutGoodsActivity.this,listItems);
                 mListView.setAdapter(mGoodsListAdapter);
                 mGoodsListAdapter.notifyDataSetChanged();
             }

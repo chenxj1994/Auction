@@ -62,11 +62,11 @@ public class GoodsListAdapter extends BaseAdapter {
         mViewHolder.goodsItemPrice.setText(listItems.get(position).getPrice()+"");
         return convertView;
     }
-    public static class ViewHolder{
-        public TextView goodsItemTitle;
-        public TextView goodsItemDetail;
-        public TextView goodsItemSeller;
-        public TextView goodsItemTime;
-        public TextView goodsItemPrice;
+    private static class ViewHolder{
+        private TextView goodsItemTitle;
+        private TextView goodsItemDetail;
+        private TextView goodsItemSeller;
+        private TextView goodsItemTime;
+        private TextView goodsItemPrice;
     }
 }

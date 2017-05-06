@@ -1,6 +1,7 @@
 package com.example.chenxuanjin.auction.bean;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by chenxuanjin on 2017/4/27.
@@ -8,15 +9,15 @@ import cn.bmob.v3.BmobObject;
 
 public class Orders extends BmobObject {
 
-    private String buyerName;
+    private MyUser buyer;
     private String contact;
     private Goods goods;
 
-    public String getBuyerName(){
-        return buyerName;
+    public MyUser getBuyer(){
+        return buyer;
     }
-    public void setBuyerName(String buyerName){
-        this.buyerName = buyerName;
+    public void setBuyer(MyUser buyer){
+        this.buyer = buyer;
     }
 
     public Goods getGoods(){
