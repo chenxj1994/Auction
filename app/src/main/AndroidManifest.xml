@@ -48,7 +48,8 @@
             android:label="@string/finish" />
         <activity
             android:name=".PersonalGoodsListActivity"
-            android:label="@string/upload" />
+            android:label="@string/upload"
+            android:launchMode="singleTop" />
         <activity
             android:name=".GoodsDetailActivity"
             android:label="@string/goods_detail"
@@ -57,8 +58,11 @@
             android:name=".OrderConfirmActivity"
             android:label="@string/buy_goods" />
         <activity android:name=".SellOutGoodsActivity" />
-        <activity android:name=".BoughtGoodsActivity" />
-        <activity android:name=".SetupActivity"></activity>
+        <activity android:name=".BoughtGoodsActivity"
+            android:label="@string/buy"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".SetupActivity" />
+        <activity android:name=".MyCollectionActivity"></activity>
     </application>
 
 </manifest>

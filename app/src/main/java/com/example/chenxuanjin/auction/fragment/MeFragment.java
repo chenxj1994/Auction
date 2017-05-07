@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.chenxuanjin.auction.BoughtGoodsActivity;
 import com.example.chenxuanjin.auction.LoginActivity;
+import com.example.chenxuanjin.auction.MyCollectionActivity;
 import com.example.chenxuanjin.auction.PersonalGoodsListActivity;
 import com.example.chenxuanjin.auction.R;
 import com.example.chenxuanjin.auction.SellOutGoodsActivity;
@@ -186,6 +187,8 @@ public class MeFragment extends Fragment {
                         startActivity(boughtIntent);
                         break;
                     case R.id.layout_my_like:
+                        Intent myCollectionIntent = new Intent(getActivity(), MyCollectionActivity.class);
+                        startActivity(myCollectionIntent);
                         break;
                     case R.id.layout_setup:
                         Intent setupIntent = new Intent(getActivity(), SetupActivity.class);

@@ -32,8 +32,7 @@ public class SellOutGoodsActivity extends AppCompatActivity {
     private void query(){
         BmobQuery<Goods> eq1 = new BmobQuery<Goods>();
         MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
-        String user = myUser.getUsername();
-        eq1.addWhereEqualTo("seller",user);
+        eq1.addWhereEqualTo("seller",myUser);
         BmobQuery<Goods> eq2 = new BmobQuery<Goods>();
         eq2.addWhereEqualTo("state",true);
         List<BmobQuery<Goods>> andQuerys = new ArrayList<BmobQuery<Goods>>();
@@ -41,6 +40,7 @@ public class SellOutGoodsActivity extends AppCompatActivity {
         andQuerys.add(eq2);
         BmobQuery<Goods> query = new BmobQuery<Goods>();
         query.and(andQuerys);
+        query.include("seller");
         query.findObjects(new FindListener<Goods>() {
             @Override
             public void done(List<Goods> list, BmobException e) {

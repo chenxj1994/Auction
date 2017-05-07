@@ -2,6 +2,7 @@ package com.example.chenxuanjin.auction.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.chenxuanjin.auction.LoginActivity;
+import com.example.chenxuanjin.auction.MainActivity;
 import com.example.chenxuanjin.auction.R;
 import com.example.chenxuanjin.auction.bean.Goods;
 import com.example.chenxuanjin.auction.bean.MyUser;
@@ -244,20 +246,23 @@ public class PublishFragment extends Fragment {
         String goodsTitle = titleText.getText().toString();
         String goodsDetail = detailText.getText().toString();
         String goodsPrice = priceText.getText().toString();
-        BmobUser bmobUser = BmobUser.getCurrentUser(MyUser.class);
-        String goodSeller = bmobUser.getUsername();
+        MyUser user = BmobUser.getCurrentUser(MyUser.class);
         String goodsType = typeSpinner.getSelectedItem().toString();
         goods.setGoodsName(goodsTitle);
         goods.setDes(goodsDetail);
         goods.setPrice(Float.parseFloat(goodsPrice));
         goods.setState(false);
-        goods.setSeller(goodSeller);
+        goods.setSeller(user);
         goods.setType(goodsType);
         goods.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
                 if(e == null){
                     Toast.makeText(getApplicationContext(),"上架成功",Toast.LENGTH_LONG).show();
+                    HomeFragment homeFragment = new HomeFragment();
+                    FragmentTransaction transaction = getActivity().getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.content, homeFragment);
+                    transaction.commit();
                 }else{
                     Toast.makeText(getApplicationContext(),"上架失败"+e.getMessage(),Toast.LENGTH_LONG).show();
                 }

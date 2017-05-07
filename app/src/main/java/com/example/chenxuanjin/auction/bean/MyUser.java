@@ -2,6 +2,7 @@ package com.example.chenxuanjin.auction.bean;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by chenxuanjin on 2017/4/3.

@@ -56,7 +56,7 @@ public class GoodsListAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder)convertView.getTag();
         }
         mViewHolder.goodsItemTitle.setText(listItems.get(position).getGoodsName());
-        mViewHolder.goodsItemSeller.setText(listItems.get(position).getSeller());
+        mViewHolder.goodsItemSeller.setText(listItems.get(position).getSeller().getUsername());
         mViewHolder.goodsItemDetail.setText(listItems.get(position).getDes());
         mViewHolder.goodsItemTime.setText(listItems.get(position).getUpdatedAt());
         mViewHolder.goodsItemPrice.setText(listItems.get(position).getPrice()+"");

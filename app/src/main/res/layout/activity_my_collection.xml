@@ -4,15 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroud_gray"
-    tools:context="com.example.chenxuanjin.auction.BoughtGoodsActivity">
-
+    tools:context="com.example.chenxuanjin.auction.MyCollectionActivity">
     <ListView
-        android:id="@+id/bought_list"
+        android:id="@+id/likes_list"
         android:headerDividersEnabled="false"
         android:divider="#000000"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
-
 </RelativeLayout>

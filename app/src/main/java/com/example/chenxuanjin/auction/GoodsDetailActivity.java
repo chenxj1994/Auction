@@ -1,7 +1,9 @@
 package com.example.chenxuanjin.auction;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +50,7 @@ public class GoodsDetailActivity extends AppCompatActivity {
     private List<Comment> listItems = new ArrayList<Comment>();
     private CommentListAdapter mCommentListAdapter;
     private ListView mListView;
+    private String sActivity;
     private Boolean IsCollected = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class GoodsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_goods_detail);
         Bundle bundle = this.getIntent().getExtras();
         goods = (Goods)bundle.getSerializable("goods_data");
+        sActivity = bundle.getString("start_activity");
         initUI();
     }
 
@@ -101,21 +105,39 @@ public class GoodsDetailActivity extends AppCompatActivity {
             }
         });
 
-        orderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(BmobUser.getCurrentUser(MyUser.class)!=null){
-                        Intent intent = new Intent(GoodsDetailActivity.this,OrderConfirmActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("goods",goods);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                }else{
-                    Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-                    startActivity(intent);
+        if(goods.getSeller().getObjectId().equals(BmobUser.getCurrentUser().getObjectId())){
+            orderBtn.setText("下架");
+            orderBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDialog();
                 }
+            });
+        }else{
+            if(goods.getState()==true){
+                orderBtn.setBackgroundResource(R.color.light_gray);
+                orderBtn.setText("已售");
+            }else{
+                orderBtn.setBackgroundResource(R.color.colorPrimary);
+                orderBtn.setText("立即下单");
+                orderBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(BmobUser.getCurrentUser(MyUser.class)!=null){
+                            Intent intent = new Intent(GoodsDetailActivity.this,OrderConfirmActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("goods",goods);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
             }
-        });
+        }
+
         sendCommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +150,7 @@ public class GoodsDetailActivity extends AppCompatActivity {
         });
         goodsName.setText(goods.getGoodsName());
         goodsPrice.setText(goods.getPrice()+"");
-        goodsSeller.setText(goods.getSeller());
+        goodsSeller.setText(goods.getSeller().getUsername());
         goodsDes.setText(goods.getDes());
         if (goods != null){
             if(goods.getPic() != null){
@@ -241,6 +263,33 @@ public class GoodsDetailActivity extends AppCompatActivity {
                     }
                 }else {
                     Log.i("Jharden","失败："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GoodsDetailActivity.this);
+        builder.setMessage("确定下架？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteGoods();
+            }
+        });
+        builder.setNegativeButton("取消",null);
+        builder.create().show();
+    }
+
+    private void deleteGoods(){
+        goods.delete(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e == null){
+                    Intent intent = new Intent(GoodsDetailActivity.this,PersonalGoodsListActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"下架失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
         });

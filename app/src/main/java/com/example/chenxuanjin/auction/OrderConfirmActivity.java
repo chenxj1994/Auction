@@ -1,5 +1,6 @@
 package com.example.chenxuanjin.auction;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -84,6 +85,8 @@ public class OrderConfirmActivity extends AppCompatActivity {
             @Override
             public void done(String s, BmobException e) {
                 if(e == null){
+                    Intent intent = new Intent(OrderConfirmActivity.this,BoughtGoodsActivity.class);
+                    startActivity(intent);
                     Toast.makeText(getApplicationContext(),"下单成功",Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(getApplicationContext(),"下单失败"+e.getMessage(),Toast.LENGTH_LONG).show();

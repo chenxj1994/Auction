@@ -18,7 +18,7 @@ public class Goods extends BmobObject implements Serializable{
     private String des;
     private String type;
     private Boolean state;
-    private String seller;
+    private MyUser seller;
     private BmobFile pic;
     private Float Price;
     private BmobRelation likes;
@@ -56,11 +56,11 @@ public class Goods extends BmobObject implements Serializable{
         this.state = state;
     }
 
-    public String getSeller(){
+    public MyUser getSeller(){
         return seller;
     }
 
-    public void setSeller(String seller){
+    public void setSeller(MyUser seller){
         this.seller = seller;
     }
 

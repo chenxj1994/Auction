@@ -119,6 +119,7 @@ public class HomeFragment extends Fragment implements RadioGroup.OnCheckedChange
                 Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("goods_data",goods);
+                bundle.putString("start_activity","HomeFragment");
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -203,6 +204,7 @@ public class HomeFragment extends Fragment implements RadioGroup.OnCheckedChange
     public void query(){
         BmobQuery<Goods> query = new BmobQuery<Goods>();
         query.addWhereEqualTo("state",false);
+        query.include("seller");
         query.findObjects(new FindListener<Goods>() {
             @Override
             public void done(List<Goods> list, BmobException e) {
@@ -227,6 +229,7 @@ public class HomeFragment extends Fragment implements RadioGroup.OnCheckedChange
         andQuerys.add(eq2);
         BmobQuery<Goods> query = new BmobQuery<Goods>();
         query.and(andQuerys);
+        query.include("seller");
         query.findObjects(new FindListener<Goods>() {
             @Override
             public void done(List<Goods> list, BmobException e) {

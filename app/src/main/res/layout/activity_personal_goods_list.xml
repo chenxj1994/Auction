@@ -4,11 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:background="@color/backgroud_gray"
     tools:context="com.example.chenxuanjin.auction.PersonalGoodsListActivity">
 
     <ListView
         android:id="@+id/my_goods_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="#000000"
+        android:headerDividersEnabled="false"
         android:layout_margin="8dp" />
 </LinearLayout>
