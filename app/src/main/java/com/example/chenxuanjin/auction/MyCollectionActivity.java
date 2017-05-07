@@ -33,6 +33,7 @@ public class MyCollectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_collection);
         mListView = (ListView)findViewById(R.id.likes_list);
+        query();
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -44,7 +45,6 @@ public class MyCollectionActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        query();
     }
 
     private void query(){

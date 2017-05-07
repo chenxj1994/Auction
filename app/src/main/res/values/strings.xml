@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Auction</string>
+    <string name="app_name">校园闲置</string>
     <string name="title_home">主页</string>
     <string name="title_dashboard">上架</string>
     <string name="title_notifications">Notifications</string>
@@ -27,6 +27,7 @@
     <string name="setup">设置</string>
     <string name="personal_order">个人订单</string>
     <string name="my_order">我的订单</string>
+    <string name="order_detail">订单详情</string>
     <string name="goods_detail">物品详情</string>
     <string name="buy_goods">货物购买</string>
     <string name="tip">请选择分类</string>

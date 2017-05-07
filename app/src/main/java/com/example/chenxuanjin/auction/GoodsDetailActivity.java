@@ -58,7 +58,6 @@ public class GoodsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_goods_detail);
         Bundle bundle = this.getIntent().getExtras();
         goods = (Goods)bundle.getSerializable("goods_data");
-        sActivity = bundle.getString("start_activity");
         initUI();
     }
 
@@ -88,8 +87,12 @@ public class GoodsDetailActivity extends AppCompatActivity {
         layoutWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goodsDetailBottom.setVisibility(View.GONE);
-                layoutSendComment.setVisibility(View.VISIBLE);
+                if(BmobUser.getCurrentUser()!=null){
+                    goodsDetailBottom.setVisibility(View.GONE);
+                    layoutSendComment.setVisibility(View.VISIBLE);
+                }else {
+                    showSignUpDialog();
+                }
             }
         });
         //收藏监听
@@ -97,46 +100,50 @@ public class GoodsDetailActivity extends AppCompatActivity {
         likes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(IsCollected){
-                    cancelCollection();
+                if(BmobUser.getCurrentUser()!=null){
+                    if(IsCollected){
+                        cancelCollection();
+                    }else {
+                        setCollection();
+                    }
                 }else {
-                    setCollection();
+                    showSignUpDialog();
                 }
             }
         });
 
-        if(goods.getSeller().getObjectId().equals(BmobUser.getCurrentUser().getObjectId())){
-            orderBtn.setText("下架");
-            orderBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showDialog();
-                }
-            });
-        }else{
-            if(goods.getState()==true){
-                orderBtn.setBackgroundResource(R.color.light_gray);
-                orderBtn.setText("已售");
-            }else{
-                orderBtn.setBackgroundResource(R.color.colorPrimary);
-                orderBtn.setText("立即下单");
+        if(BmobUser.getCurrentUser()!=null) {
+            if(goods.getSeller().getObjectId().equals(BmobUser.getCurrentUser().getObjectId())){
+                orderBtn.setText("下架");
                 orderBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(BmobUser.getCurrentUser(MyUser.class)!=null){
-                            Intent intent = new Intent(GoodsDetailActivity.this,OrderConfirmActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("goods",goods);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }else{
-                            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-                            startActivity(intent);
-                        }
+                        showDialog();
                     }
                 });
+            }else{
+                if(goods.getState()==true){
+                    orderBtn.setBackgroundResource(R.color.light_gray);
+                    orderBtn.setText("已售");
+                }else{
+                    orderBtn.setBackgroundResource(R.color.colorPrimary);
+                    orderBtn.setText("立即下单");
+                    orderBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                                Intent intent = new Intent(GoodsDetailActivity.this,OrderConfirmActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("goods",goods);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                        }
+                    });
+                }
             }
+        }else {
+            orderBtn.setOnClickListener(listener);
         }
+
 
         sendCommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +167,17 @@ public class GoodsDetailActivity extends AppCompatActivity {
             }
         loadComment();
     }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.order_btn:
+                    showSignUpDialog();
+                    break;
+            }
+        }
+    };
 
     private void uploadComment(){
         final Comment comment = new Comment();
@@ -240,32 +258,34 @@ public class GoodsDetailActivity extends AppCompatActivity {
     }
 
     private void initLikesUI(){
-        BmobQuery<MyUser> eq1 = new BmobQuery<MyUser>();
-        eq1.addWhereRelatedTo("likes",new BmobPointer(goods));
-        BmobQuery<MyUser> eq2 = new BmobQuery<MyUser>();
-        MyUser user = BmobUser.getCurrentUser(MyUser.class);
-        eq2.addWhereEqualTo("objectId",user.getObjectId());
-        List<BmobQuery<MyUser>> andQuerys = new ArrayList<BmobQuery<MyUser>>();
-        andQuerys.add(eq1);
-        andQuerys.add(eq2);
-        BmobQuery<MyUser> query = new BmobQuery<MyUser>();
-        query.and(andQuerys);
-        query.findObjects(new FindListener<MyUser>() {
-            @Override
-            public void done(List<MyUser> list, BmobException e) {
-                if(e == null){
-                    if(list.size()==0){
-                        IsCollected = false;
-                        likes.setImageResource(R.drawable.collection);
+        if(BmobUser.getCurrentUser()!=null){
+            BmobQuery<MyUser> eq1 = new BmobQuery<MyUser>();
+            eq1.addWhereRelatedTo("likes",new BmobPointer(goods));
+            BmobQuery<MyUser> eq2 = new BmobQuery<MyUser>();
+            MyUser user = BmobUser.getCurrentUser(MyUser.class);
+            eq2.addWhereEqualTo("objectId",user.getObjectId());
+            List<BmobQuery<MyUser>> andQuerys = new ArrayList<BmobQuery<MyUser>>();
+            andQuerys.add(eq1);
+            andQuerys.add(eq2);
+            BmobQuery<MyUser> query = new BmobQuery<MyUser>();
+            query.and(andQuerys);
+            query.findObjects(new FindListener<MyUser>() {
+                @Override
+                public void done(List<MyUser> list, BmobException e) {
+                    if(e == null){
+                        if(list.size()==0){
+                            IsCollected = false;
+                            likes.setImageResource(R.drawable.collection);
+                        }else {
+                            IsCollected = true;
+                            likes.setImageResource(R.drawable.like);
+                        }
                     }else {
-                        IsCollected = true;
-                        likes.setImageResource(R.drawable.like);
+                        Log.i("Jharden","失败："+e.getMessage());
                     }
-                }else {
-                    Log.i("Jharden","失败："+e.getMessage());
                 }
-            }
-        });
+            });
+        }
     }
 
     private void showDialog(){
@@ -278,6 +298,19 @@ public class GoodsDetailActivity extends AppCompatActivity {
             }
         });
         builder.setNegativeButton("取消",null);
+        builder.create().show();
+    }
+
+    public void showSignUpDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GoodsDetailActivity.this);
+        builder.setMessage("请先登陆！");
+        builder.setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         builder.create().show();
     }
 
